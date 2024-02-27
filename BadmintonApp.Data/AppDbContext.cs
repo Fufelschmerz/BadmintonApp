@@ -63,7 +63,7 @@ public sealed class AppDbContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		optionsBuilder.UseNpgsql(@"Host=localhost;Database=BadmintonDb;Port=5433;Username=postgres;Password=root;Persist Security Info=True;Include Error Detail=True");
+		optionsBuilder.UseNpgsql(@"Host=37.187.123.156;Database=aapetrova_partners;Port=5432;Username=aapetrova_usr;Password=U7C5Wae7gJCXIqQc;Persist Security Info=True;Include Error Detail=True");
 
 
 		base.OnConfiguring(optionsBuilder);
