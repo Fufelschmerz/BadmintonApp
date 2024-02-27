@@ -1,5 +1,7 @@
+using BadmintonApp.Contracts;
 using BadmintonApp.Contracts.Interfaces;
 using BadmintonApp.Data.Entities;
+using BadmintonApp.Data.Entities.Players;
 using Microsoft.EntityFrameworkCore;
 
 namespace BadmintonApp.Data.Repositories;
@@ -52,6 +54,16 @@ public abstract class BaseRepository<TDto, TEntity>
 
 		return Convert(entity);
 	}
+    public virtual RankDto? GetOrDefaultByName(string title)
+    {
+        using var dbContext = new AppDbContext();
+        var rank = dbContext.Set<TEntity>().SingleOrDefault(x => x.Title == title);
+
+        if (rank is null)
+            return default;
+
+        return Convert(rank);
+    }
 
 	public virtual void DeleteRange(IEnumerable<int> ids)
 	{

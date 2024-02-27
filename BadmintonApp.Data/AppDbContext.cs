@@ -42,16 +42,58 @@ public sealed class AppDbContext : DbContext
 			new Rank
 			{
 				Id = 1,
-				Title = "КМС",
+				Title = "МСМК",
 				CreatedAtUTC = DateTime.UtcNow,
 			},
 			new Rank
 			{
 				Id = 2,
-				Title = "1 спортивный",
+				Title = "МС",
 				CreatedAtUTC= DateTime.UtcNow,
-			}
-		};
+            },
+            new Rank
+            {
+                Id = 3,
+                Title = "КМС",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+            new Rank
+            {
+                Id = 4,
+                Title = "1",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+            new Rank
+            {
+                Id = 5,
+                Title = "2",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+            new Rank
+            {
+                Id = 6,
+                Title = "3",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+            new Rank
+            {
+                Id = 7,
+                Title = "1ю",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+            new Rank
+            {
+                Id = 8,
+                Title = "2ю",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+            new Rank
+            {
+                Id = 9,
+                Title = "3ю",
+                CreatedAtUTC= DateTime.UtcNow,
+            },
+        };
 
 		modelBuilder.Entity<Rank>(entity =>
 		{
@@ -63,7 +105,7 @@ public sealed class AppDbContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		optionsBuilder.UseNpgsql(@"Host=localhost;Database=BadmintonDb;Port=5433;Username=postgres;Password=root;Persist Security Info=True;Include Error Detail=True");
+		optionsBuilder.UseNpgsql(@"Host=37.187.123.156;Database=aapetrova_partners;Port=5432;Username=aapetrova_usr;Password=U7C5Wae7gJCXIqQc;Persist Security Info=True;Include Error Detail=True");
 
 
 		base.OnConfiguring(optionsBuilder);

@@ -1,12 +1,11 @@
 ﻿using Badminton.BL.Services;
 using Badminton.Contracts;
-using BadmintonApp.Data.Repositories;
 
 namespace BadmintonApp.Desktop.Forms;
 public partial class PlayersForm : Form
 {
 	//TODO: избавиться от использования репозиториев, использовать сервисы
-	private readonly RankRepository _rankRepository = new();
+	private readonly RankService _rankService = new();
 	private readonly PlayerService _playerService = new();
 
 	public PlayersForm()
@@ -36,7 +35,7 @@ public partial class PlayersForm : Form
 
 	private void InitializeComboBoxRanks()
 	{
-		var ranks = _rankRepository.GetAll()
+		var ranks = _rankService.GetAll()
 			.Select(x => x.Title);
 
 		var rankColumn = new DataGridViewComboBoxColumn()
@@ -103,7 +102,7 @@ public partial class PlayersForm : Form
 
 		if (rankName is not null)
 		{
-			var rank = _rankRepository.GetOrDefaultByName(rankName);
+			var rank = _rankService.GetOrDefaultByName(rankName);
 
 			if (rank is null)
 				throw new ArgumentNullException(nameof(rank));
@@ -145,4 +144,5 @@ public partial class PlayersForm : Form
 		if (row.Cells[5].Value is null)
 			throw new ArgumentNullException($"В строке {index} не указан пол игрока");
 	}
+
 }

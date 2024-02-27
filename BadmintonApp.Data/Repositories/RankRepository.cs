@@ -1,19 +1,30 @@
-﻿using BadmintonApp.Contracts;
+﻿using Badminton.Contracts;
+using BadmintonApp.Contracts;
 using BadmintonApp.Data.Entities.Players;
+using Microsoft.EntityFrameworkCore;
 
 namespace BadmintonApp.Data.Repositories;
 
 public class RankRepository : BaseRepository<RankDto, Rank>
 {
-	public RankDto? GetOrDefaultByName(string name)
-	{
-		using var dbContext = new AppDbContext();
-		var entity = dbContext.Ranks.SingleOrDefault(x => x.Title.ToLower() == name.Trim().ToLower());
-		if (entity is null)
-			return null;
+    public override RankDto? GetOrDefaultByName(string name)
+    {
+        using var dbContext = new AppDbContext();
+        var entity = dbContext.Ranks.SingleOrDefault(x => x.Title.ToLower() == name.Trim().ToLower());
+        if (entity is null)
+            return null;
 
-		return Convert(entity);
-	}
+        return Convert(entity);
+    }
+    public override IEnumerable<RankDto> GetAll()
+    {
+        using var dbContext = new AppDbContext();
+        var entities = dbContext.Ranks
+            .OrderBy(x => x.Id)
+            .ToArray();
+        var dtos = entities.Select(Convert);
+        return dtos;
+    }
 
 	protected override RankDto Convert(Rank entity)
 	{

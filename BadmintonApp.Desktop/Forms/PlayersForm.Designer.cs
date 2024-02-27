@@ -28,83 +28,92 @@ partial class PlayersForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		PlayersDataGridView = new DataGridView();
-		Id = new DataGridViewTextBoxColumn();
-		Surname = new DataGridViewTextBoxColumn();
-		Name = new DataGridViewTextBoxColumn();
-		Patronymic = new DataGridViewTextBoxColumn();
-		DateBirthday = new DataGridViewTextBoxColumn();
-		Gender = new DataGridViewComboBoxColumn();
-		SaveButton = new Button();
-		((System.ComponentModel.ISupportInitialize)PlayersDataGridView).BeginInit();
-		SuspendLayout();
-		// 
-		// PlayersDataGridView
-		// 
-		PlayersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-		PlayersDataGridView.Columns.AddRange(new DataGridViewColumn[] { Id, Surname, Name, Patronymic, DateBirthday, Gender });
-		PlayersDataGridView.Location = new Point(12, 12);
-		PlayersDataGridView.Name = "PlayersDataGridView";
-		PlayersDataGridView.RowTemplate.Height = 25;
-		PlayersDataGridView.Size = new Size(594, 375);
-		PlayersDataGridView.TabIndex = 0;
-		// 
-		// Id
-		// 
-		Id.HeaderText = "Id";
-		Id.Name = "Id";
-		Id.ReadOnly = true;
-		Id.Resizable = DataGridViewTriState.True;
-		Id.Width = 50;
-		// 
-		// Surname
-		// 
-		Surname.HeaderText = "Фамилия";
-		Surname.Name = "Surname";
-		// 
-		// Name
-		// 
-		Name.HeaderText = "Имя";
-		Name.Name = "Name";
-		// 
-		// Patronymic
-		// 
-		Patronymic.HeaderText = "Отчество";
-		Patronymic.Name = "Patronymic";
-		// 
-		// DateBirthday
-		// 
-		DateBirthday.HeaderText = "Дата рождения";
-		DateBirthday.Name = "DateBirthday";
-		// 
-		// Gender
-		// 
-		Gender.HeaderText = "Пол";
-		Gender.Items.AddRange(new object[] { "Мужчина", "Женщина", "Другое" });
-		Gender.Name = "Gender";
-		Gender.Resizable = DataGridViewTriState.True;
-		Gender.SortMode = DataGridViewColumnSortMode.Automatic;
-		// 
-		// SaveButton
-		// 
-		SaveButton.Location = new Point(459, 418);
-		SaveButton.Name = "SaveButton";
-		SaveButton.Size = new Size(147, 42);
-		SaveButton.TabIndex = 1;
-		SaveButton.Text = "Сохранить";
-		SaveButton.UseVisualStyleBackColor = true;
-		SaveButton.Click += SaveButton_Click;
-		// 
-		// PlayersForm
-		// 
-		AutoScaleDimensions = new SizeF(7F, 15F);
-		AutoScaleMode = AutoScaleMode.Font;
-		ClientSize = new Size(620, 472);
-		Controls.Add(SaveButton);
-		Controls.Add(PlayersDataGridView);
-		Text = "Игроки";
-		((System.ComponentModel.ISupportInitialize)PlayersDataGridView).EndInit();
-		ResumeLayout(false);
+            this.PlayersDataGridView = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Patronymic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateBirthday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Gender = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.SaveButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.PlayersDataGridView)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // PlayersDataGridView
+            // 
+            this.PlayersDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PlayersDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Surname,
+            this.Name,
+            this.Patronymic,
+            this.DateBirthday,
+            this.Gender});
+            this.PlayersDataGridView.Location = new System.Drawing.Point(12, 14);
+            this.PlayersDataGridView.Name = "PlayersDataGridView";
+            this.PlayersDataGridView.RowTemplate.Height = 25;
+            this.PlayersDataGridView.Size = new System.Drawing.Size(594, 425);
+            this.PlayersDataGridView.TabIndex = 0;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Id.Width = 50;
+            // 
+            // Surname
+            // 
+            this.Surname.HeaderText = "Фамилия";
+            this.Surname.Name = "Surname";
+            // 
+            // Name
+            // 
+            this.Name.HeaderText = "Имя";
+            this.Name.Name = "Name";
+            // 
+            // Patronymic
+            // 
+            this.Patronymic.HeaderText = "Отчество";
+            this.Patronymic.Name = "Patronymic";
+            // 
+            // DateBirthday
+            // 
+            this.DateBirthday.HeaderText = "Дата рождения";
+            this.DateBirthday.Name = "DateBirthday";
+            // 
+            // Gender
+            // 
+            this.Gender.HeaderText = "Пол";
+            this.Gender.Items.AddRange(new object[] {
+            "Мужчина",
+            "Женщина",
+            "Другое"});
+            this.Gender.Name = "Gender";
+            this.Gender.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Gender.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(459, 474);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(147, 48);
+            this.SaveButton.TabIndex = 1;
+            this.SaveButton.Text = "Сохранить";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
+            // PlayersForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(620, 535);
+            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.PlayersDataGridView);
+            this.Text = "Игроки";
+            ((System.ComponentModel.ISupportInitialize)(this.PlayersDataGridView)).EndInit();
+            this.ResumeLayout(false);
+
 	}
 
 	#endregion
