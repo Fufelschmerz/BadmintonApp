@@ -7,15 +7,16 @@ namespace BadmintonApp.Data.Repositories;
 
 public class RankRepository : BaseRepository<RankDto, Rank>
 {
-    public override RankDto? GetOrDefaultByName(string name)
+    public RankDto? GetOrDefaultByName(string title)
     {
         using var dbContext = new AppDbContext();
-        var entity = dbContext.Ranks.SingleOrDefault(x => x.Title.ToLower() == name.Trim().ToLower());
+        var entity = dbContext.Ranks.SingleOrDefault(x => x.Title.ToLower() == title.Trim().ToLower());
         if (entity is null)
             return null;
 
         return Convert(entity);
     }
+
     public override IEnumerable<RankDto> GetAll()
     {
         using var dbContext = new AppDbContext();

@@ -1,4 +1,6 @@
 ﻿using Badminton.Contracts;
+using BadmintonApp.Contracts;
+using BadmintonApp.Contracts.Models;
 using BadmintonApp.Data.Entities.Players;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +11,40 @@ public class PlayerRepository : BaseRepository<PlayerDto, Player>
 	public override IEnumerable<PlayerDto> GetAll()
 	{
 		using var dbContext = new AppDbContext();
-		var entities = dbContext.Players.Include(x => x.Rank)
+		var entities = dbContext.Players
+			.Include(x => x.Rank)
+			.Include(x => x.City)
 			.OrderBy(x => x.Id)
 			.ToArray();
 		var dtos = entities.Select(Convert);
+		return dtos;
+	}
+
+
+	public IEnumerable<PlayerDto> GetAllByFilters(GetPlayersModel parameters)
+	{
+		using var dbContext = new AppDbContext();
+		
+		var query = dbContext.Players
+			.Include(x => x.Rank)
+			.Include(x => x.City)
+			.AsNoTracking()
+			.ToArray();
+
+		if (parameters.CityName is not null)
+			query = query.Where(x => x.City.Name == parameters.CityName).ToArray();
+
+		if (parameters.Gender is not null)
+			query = query.Where(x => x.Genger == parameters.Gender).ToArray();
+
+		if (parameters.YearBirthday is not null)
+			query = query.Where(x => x.DateBirthday.Year == parameters.YearBirthday).ToArray();
+
+		if (parameters.RankTitle is not null)
+			query = query.Where(x => x.Rank?.Title == parameters.RankTitle).ToArray();
+
+		var entities = query.OrderBy(x => x.Id);
+		var dtos = query.Select(Convert);
 		return dtos;
 	}
 
@@ -43,6 +75,12 @@ public class PlayerRepository : BaseRepository<PlayerDto, Player>
 			RankTitle = entity.Rank?.Title,
 			Genger = entity.Genger,
 			DateBirthday = entity.DateBirthday.AddHours(timeOffsetUTC),
+			CityId = entity.CityId,
+			City = new CityDto
+			{
+				Id = entity.City?.Id,
+				Name = entity.City?.Name,
+			}
 		};
 	}
 
@@ -55,6 +93,7 @@ public class PlayerRepository : BaseRepository<PlayerDto, Player>
 			Surname = dto.Surname,
 			Patronymic = dto.Patronymic,
 			RankId = dto.RankId,
+			CityId = dto.CityId,
 			Genger = dto.Genger,
 			DateBirthday = dto.DateBirthday.ToUniversalTime(),
 		};

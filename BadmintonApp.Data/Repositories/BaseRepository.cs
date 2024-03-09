@@ -28,10 +28,10 @@ public abstract class BaseRepository<TDto, TEntity>
 				.Any(x => x.Id == dto.Id);
 
 			if (!isExistsEntity)
-				throw new ArgumentException("Не удалось обновить запись", nameof(dto.Id));
+				throw new ArgumentException("РќРµ СѓРґР°Р»РѕСЃСЊ РѕР±РЅРѕРІРёС‚СЊ Р·Р°РїРёСЃСЊ", nameof(dto.Id));
 
 			var entity = Convert(dto);
-			var entry = dbContext.Set<TEntity>().Update(entity);
+			dbContext.Set<TEntity>().Update(entity);
 			dbContext.SaveChanges();
 		}
 	}
@@ -54,16 +54,6 @@ public abstract class BaseRepository<TDto, TEntity>
 
 		return Convert(entity);
 	}
-    public virtual RankDto? GetOrDefaultByName(string title)
-    {
-        using var dbContext = new AppDbContext();
-        var rank = dbContext.Set<TEntity>().SingleOrDefault(x => x.Title == title);
-
-        if (rank is null)
-            return default;
-
-        return Convert(rank);
-    }
 
 	public virtual void DeleteRange(IEnumerable<int> ids)
 	{

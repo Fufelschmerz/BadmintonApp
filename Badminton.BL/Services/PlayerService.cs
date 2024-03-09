@@ -1,26 +1,26 @@
 ﻿using Badminton.Contracts;
+using BadmintonApp.Contracts.Models;
+using BadmintonApp.Data.Entities.Players;
 using BadmintonApp.Data.Repositories;
 
 namespace Badminton.BL.Services;
 
-public class PlayerService
-{
-	private readonly PlayerRepository _playerRepository = new();
-
-	public void InsertOrUpdate(PlayerDto player)
+public class PlayerService : BaseService<PlayerRepository, PlayerDto, Player>
+{	
+	public PlayerService(PlayerRepository repository) 
+		: base(repository)
 	{
-		if (player.Id is not null)
-		{
-			_playerRepository.Update(player);
-			return;
-		}
-
-		_playerRepository.Insert(player);
 	}
 
 	public void DeleteRange(IEnumerable<int> ids) =>
-		_playerRepository.DeleteRange(ids);
+		_repository.DeleteRange(ids);
 
 	public IEnumerable<PlayerDto> GetAll() =>
-		_playerRepository.GetAll();
+		_repository.GetAll();
+
+	public IEnumerable<PlayerDto> GetAllByFilters(GetPlayersModel parameters) =>
+		_repository.GetAllByFilters(parameters);
+
+	public PlayerDto? GetOrDefaultByIdAsync(int id) =>
+		_repository.GetOrDefaultById(id);
 }

@@ -5,11 +5,14 @@ using BadmintonApp.Data.Entities.Players;
 
 namespace Badminton.BL.Services
 {
-    public class RankService
+    public class RankService : BaseService<RankRepository, RankDto, Rank>
     {
-        private readonly RankRepository _rankRepository = new();
+		public RankService(RankRepository repository) 
+			: base(repository)
+		{
+		}
 
-        public IEnumerable<RankDto> GetAll() =>
-            _rankRepository.GetAll();
+		public RankDto? GetOrDefaultByName(string name) =>
+            _repository.GetOrDefaultByName(name);
     }
 }

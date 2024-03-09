@@ -1,19 +1,58 @@
 ﻿using Badminton.BL.Services;
 using Badminton.Contracts;
+using BadmintonApp.Data.Repositories;
 
 namespace BadmintonApp.Desktop.Forms;
+
+//TODO: разобраться с регионом и городами
 public partial class PlayersForm : Form
 {
-	//TODO: избавиться от использования репозиториев, использовать сервисы
-	private readonly RankService _rankService = new();
-	private readonly PlayerService _playerService = new();
+	private readonly CityService _cityService = new();
+
+	private readonly PlayerService _playerService;
+	private readonly RankService _rankService;
 
 	public PlayersForm()
 	{
+		var playerRepository = new PlayerRepository();
+		var rankRepository = new RankRepository();
+		_playerService = new PlayerService(playerRepository);
+		_rankService = new RankService(rankRepository);
+
 		InitializeComponent();
-		InitializeComboBoxRanks();
+		InitializeComboBoxRank();
+		InitializeLocationComboBoxes();
 		InitializeDataGridView();
+
+		//PlayersDataGridView.EditingControlShowing += PlayersDataGridView_EditingControlShowing;
 	}
+
+	//private void PlayersDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+	//{
+	//	if (PlayersDataGridView.CurrentCell.ColumnIndex == 7 && e.Control is ComboBox)
+	//	{
+	//		var comboBox = e.Control as ComboBox;
+
+	//		if (comboBox is not null)
+	//		{
+	//			//var regionName = comboBox.SelectedValue?.ToString();
+
+	//			_citites = _cityService.GetAllByRegion("Пермский край");
+
+	//			comboBox.SelectedIndexChanged += RegionSelectionChanged;
+	//		}
+	//	}
+	//}
+
+	//private void RegionSelectionChanged(object sender, EventArgs e)
+	//{
+	//	var currentCell = PlayersDataGridView.CurrentCellAddress;
+	//	var cityCell = (DataGridViewComboBoxCell)PlayersDataGridView.Rows[currentCell.Y].Cells[8];
+
+	//	//TODO: заполняем
+	//	foreach(var city in _citites)
+	//		cityCell.Items.Add(city.Name);
+	//}
 
 	private void InitializeDataGridView()
 	{
@@ -29,11 +68,39 @@ public partial class PlayersForm : Form
 				player.Patronymic,
 				player.DateBirthday.ToString("d"),
 				player.Genger,
-				player.RankTitle);
+				player.RankTitle,
+				player.City?.Name);
 		}
 	}
 
-	private void InitializeComboBoxRanks()
+	private void InitializeLocationComboBoxes()
+	{
+		//var regions = _regionService.GetAll();
+		var cities = _cityService.GetAllByRegion("Пермский край");
+
+		//var regionColumn = new DataGridViewComboBoxColumn()
+		//{
+		//	Name = "Region",
+		//	HeaderText = "Регион"
+		//};
+
+		//foreach (var region in regions)
+		//	regionColumn.Items.Add(region.Name);
+
+		var cityColumn = new DataGridViewComboBoxColumn()
+		{
+			Name = "City",
+			HeaderText = "Город"
+		};
+
+		foreach (var city in cities)
+			cityColumn.Items.Add(city.Name);
+
+		//PlayersDataGridView.Columns.Insert(7, regionColumn);
+		PlayersDataGridView.Columns.Insert(7, cityColumn);
+	}
+
+	private void InitializeComboBoxRank()
 	{
 		var ranks = _rankService.GetAll()
 			.Select(x => x.Title);
@@ -60,8 +127,6 @@ public partial class PlayersForm : Form
 		for (int i = 0; i < PlayersDataGridView.Rows.Count - 1; i++)
 		{
 			var row = PlayersDataGridView.Rows[i];
-
-			ValidateRow(row);
 
 			var dto = BuildDto(row);
 
@@ -90,6 +155,8 @@ public partial class PlayersForm : Form
 
 	private PlayerDto BuildDto(DataGridViewRow row)
 	{
+		ValidateRow(row);
+
 		int? id = row.Cells[0].Value as int?;
 		string surname = (string)row.Cells[1].Value;
 		string name = (string)row.Cells[2].Value;
@@ -97,8 +164,10 @@ public partial class PlayersForm : Form
 		var dateBirthday = DateTime.Parse(row.Cells[4].Value.ToString()!);
 		string gender = (string)row.Cells[5].Value;
 		string? rankName = row.Cells[6].Value as string;
+		string cityName = (string)row.Cells[7].Value;
 
 		int? rankId = null;
+		int cityId = 0;
 
 		if (rankName is not null)
 		{
@@ -110,6 +179,16 @@ public partial class PlayersForm : Form
 			rankId = rank.Id;
 		}
 
+		if (cityName is not null)
+		{
+			var city = _cityService.GetOrDefaultByName(cityName);
+
+			if (city is null)
+				throw new ArgumentNullException(nameof(city));
+
+			cityId = city.Id!.Value;
+		}
+
 		return new PlayerDto
 		{
 			Id = id,
@@ -119,6 +198,7 @@ public partial class PlayersForm : Form
 			DateBirthday = dateBirthday.ToUniversalTime(),
 			Genger = gender,
 			RankId = rankId,
+			CityId = cityId,
 		};
 	}
 
@@ -139,10 +219,12 @@ public partial class PlayersForm : Form
 			throw new ArgumentNullException($"В строке {index} не указана дата рождения игрока");
 
 		if (!DateTime.TryParse(row.Cells[4].Value.ToString(), out var _))
-			throw new ArgumentNullException($"В строке {row.Index + 1} указана некорректная дата");
+			throw new ArgumentNullException($"В строке {row.Index} указана некорректная дата");
 
 		if (row.Cells[5].Value is null)
 			throw new ArgumentNullException($"В строке {index} не указан пол игрока");
-	}
 
+		if (row.Cells[7].Value is null)
+			throw new ArgumentNullException($"В строке {index} не указан город за который выступает игрок");
+	}
 }

@@ -1,4 +1,7 @@
+using BadmintonApp.Data.DefaultData;
+using BadmintonApp.Data.DefaultData.Location;
 using BadmintonApp.Data.Entities;
+using BadmintonApp.Data.Entities.Location;
 using BadmintonApp.Data.Entities.Matches;
 using BadmintonApp.Data.Entities.Players;
 using BadmintonApp.Data.Exceptions;
@@ -9,7 +12,11 @@ namespace BadmintonApp.Data;
 
 public sealed class AppDbContext : DbContext
 {
-	public DbSet<User> Users => Set<User>();
+	public DbSet<Tournament> Tournaments => Set<Tournament>();
+
+	public DbSet<Category> Categories => Set<Category>();
+
+    public DbSet<User> Users => Set<User>();
 
 	public DbSet<Rank> Ranks => Set<Rank>();
 
@@ -17,95 +24,56 @@ public sealed class AppDbContext : DbContext
 
 	public DbSet<Match> Matches => Set<Match>();
 
+	public DbSet<Country> Countries => Set<Country>();
+
+	public DbSet<Region> Regions => Set<Region>();
+
+	public DbSet<City> Cities => Set<City>();
+
 	public DbSet<Set> Sets => Set<Set>();
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		//TODO: рефакторинг
-		modelBuilder.Entity<Player>()
-			.HasMany(x => x.HomeMatches)
-			.WithOne(x => x.PlayerOne)
-			.HasForeignKey(x => x.PlayerOneId)
-			.HasPrincipalKey(x => x.Id);
-
-		//TODO: рефакторинг
-		modelBuilder.Entity<Player>()
-			.HasMany(x => x.AwayMatches)
-			.WithOne(x => x.PlayerTwo)
-			.HasForeignKey(x => x.PlayerTwoId)
-			.HasPrincipalKey(x => x.Id);
-
-		//TODO: инициализировать остальные разряды
-		//TODO: рефакторинг
-		var ranks = new Rank[]
-		{
-			new Rank
-			{
-				Id = 1,
-				Title = "МСМК",
-				CreatedAtUTC = DateTime.UtcNow,
-			},
-			new Rank
-			{
-				Id = 2,
-				Title = "МС",
-				CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 3,
-                Title = "КМС",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 4,
-                Title = "1",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 5,
-                Title = "2",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 6,
-                Title = "3",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 7,
-                Title = "1ю",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 8,
-                Title = "2ю",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-            new Rank
-            {
-                Id = 9,
-                Title = "3ю",
-                CreatedAtUTC= DateTime.UtcNow,
-            },
-        };
+		var ranks = new RankDefaults().GetDefaultsData();
+		var countries = new CountryDefaults().GetDefaultsData();
+		var regions = new RegionDefaults().GetDefaultsData();
+		var cities = new CityDefaults().GetDefaultsData();
+		var categories = new CategoryDefaults().GetDefaultsData();
 
 		modelBuilder.Entity<Rank>(entity =>
 		{
 			entity.HasData(ranks);
 		});
 
+		modelBuilder.Entity<Country>(entity =>
+		{
+			entity.HasData(countries);
+		});
+
+		modelBuilder.Entity<Region>(entity =>
+		{
+			entity.HasData(regions);
+		});
+
+		modelBuilder.Entity<City>(entity =>
+		{
+			entity.HasData(cities);
+		});
+
+		modelBuilder.Entity<Category>(entity =>
+		{
+			entity.HasData(categories);
+		});
+
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
 		base.OnModelCreating(modelBuilder);
 	}
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		optionsBuilder.UseNpgsql(@"Host=37.187.123.156;Database=aapetrova_partners;Port=5432;Username=aapetrova_usr;Password=U7C5Wae7gJCXIqQc;Persist Security Info=True;Include Error Detail=True");
+		optionsBuilder.UseNpgsql(@"Host=localhost;Database=BadmintonDb;Port=5433;Username=postgres;Password=root;Persist Security Info=True;Include Error Detail=True");
 
 
 		base.OnConfiguring(optionsBuilder);

@@ -3,6 +3,7 @@ using System;
 using BadmintonApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BadmintonApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240307133836_Edit_Tournaments")]
+    partial class Edit_Tournaments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,19 +51,19 @@ namespace BadmintonApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9637),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8098),
                             Title = "Одиночный разряд"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9638),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8099),
                             Title = "Парный разряд"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9639),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8101),
                             Title = "Смешанный"
                         });
                 });
@@ -97,14 +99,14 @@ namespace BadmintonApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9631),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8090),
                             Name = "Пермь",
                             RegionId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9632),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8091),
                             Name = "Березники",
                             RegionId = 1
                         });
@@ -137,7 +139,7 @@ namespace BadmintonApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9625),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8081),
                             Name = "Россия"
                         });
                 });
@@ -175,7 +177,7 @@ namespace BadmintonApp.Data.Migrations
                         {
                             Id = 1,
                             CountryId = 1,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9627),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8085),
                             Name = "Пермский край"
                         });
                 });
@@ -281,6 +283,9 @@ namespace BadmintonApp.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<int?>("TournamentId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("UpdatedAtUTC")
                         .HasColumnType("timestamp with time zone");
 
@@ -289,6 +294,8 @@ namespace BadmintonApp.Data.Migrations
                     b.HasIndex("CityId");
 
                     b.HasIndex("RankId");
+
+                    b.HasIndex("TournamentId");
 
                     b.ToTable("Players");
                 });
@@ -320,55 +327,55 @@ namespace BadmintonApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9603),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8059),
                             Title = "МСМК"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9606),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8064),
                             Title = "МС"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9609),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8067),
                             Title = "КМС"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9611),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8068),
                             Title = "1"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9613),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8071),
                             Title = "2"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9613),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8072),
                             Title = "3"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9614),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8073),
                             Title = "1ю"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9618),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8074),
                             Title = "2ю"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAtUTC = new DateTime(2024, 3, 7, 14, 19, 19, 107, DateTimeKind.Utc).AddTicks(9619),
+                            CreatedAtUTC = new DateTime(2024, 3, 7, 13, 38, 35, 410, DateTimeKind.Utc).AddTicks(8075),
                             Title = "3ю"
                         });
                 });
@@ -466,21 +473,6 @@ namespace BadmintonApp.Data.Migrations
                     b.ToTable("CategoryTournament");
                 });
 
-            modelBuilder.Entity("PlayerTournament", b =>
-                {
-                    b.Property<int>("PlayersId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TournamentsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PlayersId", "TournamentsId");
-
-                    b.HasIndex("TournamentsId");
-
-                    b.ToTable("PlayerTournament");
-                });
-
             modelBuilder.Entity("BadmintonApp.Data.Entities.Location.City", b =>
                 {
                     b.HasOne("BadmintonApp.Data.Entities.Location.Region", "Region")
@@ -545,6 +537,10 @@ namespace BadmintonApp.Data.Migrations
                         .WithMany()
                         .HasForeignKey("RankId");
 
+                    b.HasOne("BadmintonApp.Data.Entities.Tournament", null)
+                        .WithMany("Players")
+                        .HasForeignKey("TournamentId");
+
                     b.Navigation("City");
 
                     b.Navigation("Rank");
@@ -576,21 +572,6 @@ namespace BadmintonApp.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PlayerTournament", b =>
-                {
-                    b.HasOne("BadmintonApp.Data.Entities.Players.Player", null)
-                        .WithMany()
-                        .HasForeignKey("PlayersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BadmintonApp.Data.Entities.Tournament", null)
-                        .WithMany()
-                        .HasForeignKey("TournamentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("BadmintonApp.Data.Entities.Location.Country", b =>
                 {
                     b.Navigation("Regions");
@@ -611,6 +592,11 @@ namespace BadmintonApp.Data.Migrations
                     b.Navigation("AwayMatches");
 
                     b.Navigation("HomeMatches");
+                });
+
+            modelBuilder.Entity("BadmintonApp.Data.Entities.Tournament", b =>
+                {
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }
